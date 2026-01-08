@@ -3,348 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinity Universe Timer</title>
+    <title>Infinity Cosmic Sound Timer</title>
     <style>
         :root {
-            /* Theme Colors */
-            --accent-purple: #bd34fe;
-            --accent-blue: #41d1ff;
-            --text-bright: #ffffff;
-            --text-dim: #8892b0;
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --accent-color: #00d4ff;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Deep space base gradient */
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            margin: 0; padding: 0; height: 100vh; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
         }
 
-        /* --- The Cosmic Background Canvas --- */
-        #universe-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; /* Sits behind the timer */
-            pointer-events: none;
-        }
+        #canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
-        /* --- Timer UI Card --- */
-        .timer-container {
-            position: relative;
-            z-index: 10; /* Brings timer forward */
-            
-            /* Glassmorphism effect */
-            background: rgba(20, 25, 40, 0.6);
+        .container {
+            position: relative; z-index: 10;
+            text-align: center; width: 280px;
+            padding: 25px; border-radius: 28px;
+            background: rgba(255,255,255,0.03);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            
-            padding: 2.5rem;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            width: 280px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* --- Mode Buttons --- */
-        .modes {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .mode-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-dim);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mode-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--text-bright);
-        }
-
-        .mode-btn.active {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            border: 1px solid transparent;
-            color: var(--text-bright);
-            box-shadow: 0 0 20px rgba(65, 209, 255, 0.3);
-        }
-
-        /* --- The Main Numbers --- */
         #timer {
-            font-size: 4.5rem;
-            font-weight: 200;
-            /* Gradient text effect */
-            background: linear-gradient(to bottom, #ffffff, #a0a7c0);
+            font-size: 4.5rem; font-weight: 200; margin: 10px 0;
+            cursor: pointer; user-select: none;
+            background: linear-gradient(to bottom, #fff, var(--accent-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            
-            margin-bottom: 25px;
-            cursor: pointer;
-            font-variant-numeric: tabular-nums; /* Keeps numbers fixed width */
-            user-select: none;
         }
 
-        /* --- Control Buttons --- */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+        .controls { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+
+        .btn {
+            background: rgba(255,255,255,0.05); color: var(--text-color);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px; border-radius: 50px; cursor: pointer;
+            font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s;
         }
 
-        .control-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            color: var(--text-bright);
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .btn:hover { border-color: var(--accent-color); background: rgba(0,212,255,0.1); }
 
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        /* Sound Control Switch */
+        .sound-toggle {
+            margin-top: 20px; font-size: 0.7rem; color: #8892b0;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; opacity: 0.6; transition: 0.3s;
         }
-
-        #startBtn {
-             background: linear-gradient(135deg, rgba(189, 52, 254, 0.2), rgba(65, 209, 255, 0.2));
-             border: 1px solid rgba(65, 209, 255, 0.3);
-        }
-         #startBtn:hover {
-             background: linear-gradient(135deg, rgba(189, 52, 254, 0.4), rgba(65, 209, 255, 0.4));
-         }
+        .sound-toggle:hover { opacity: 1; }
+        .sound-toggle.active { color: var(--accent-color); opacity: 1; }
 
     </style>
 </head>
 <body>
 
-<canvas id="universe-canvas"></canvas>
+<canvas id="canvas"></canvas>
 
-<div class="timer-container">
-    <div class="modes">
-        <button class="mode-btn active" onclick="setMode(25, this)">ORBIT</button>
-        <button class="mode-btn" onclick="setMode(5, this)">REST</button>
-        <button class="mode-btn" onclick="setMode(15, this)">DEEP SPACE</button>
+<div class="container">
+    <div id="timer" onclick="toggleTimer()">25:00</div>
+    
+    <div class="controls">
+        <button class="btn" id="ctrl" onclick="toggleTimer()">ENGAGE</button>
+        <button class="btn" onclick="resetTimer()">RESET</button>
     </div>
 
-    <div id="timer" onclick="toggleTimer()">25:00</div>
-
-    <div class="controls">
-        <button class="control-btn" id="startBtn" onclick="toggleTimer()">ENGAGE</button>
-        <button class="control-btn" onclick="resetTimer()">RESET</button>
+    <div class="sound-toggle" id="rainBtn" onclick="toggleRain()">
+        <span id="speaker-icon">🔇</span> RAIN AMBIENCE
     </div>
 </div>
 
-<script>
-    let timeLeft = 25 * 60;
-    let timerId = null;
-    let isRunning = false;
+<audio id="rainSource" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
+<script>
+    // --- URL CUSTOMIZATION ---
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('accent')) document.documentElement.style.setProperty('--accent-color', '#' + urlParams.get('accent'));
+
+    // --- TIMER LOGIC ---
+    let time = 25 * 60, running = false, interval;
     const timerDisplay = document.getElementById('timer');
-    const startBtn = document.getElementById('startBtn');
+    const ctrlBtn = document.getElementById('ctrl');
 
     function updateDisplay() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        document.title = `${timerDisplay.textContent} | Infinity Timer`;
+        let m = Math.floor(time/60), s = time%60;
+        timerDisplay.textContent = `${m}:${s<10?'0':''}${s}`;
     }
 
     function toggleTimer() {
-        if (isRunning) {
-            clearInterval(timerId);
-            startBtn.textContent = 'ENGAGE';
+        if(!running) {
+            interval = setInterval(() => { if(time>0){time--; updateDisplay();} else { stopTimer(); alert("Session Complete."); } }, 1000);
+            ctrlBtn.textContent = 'HALT';
         } else {
-            timerId = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateDisplay();
-                } else {
-                    clearInterval(timerId);
-                    // Optional sound could go here
-                }
-            }, 1000);
-            startBtn.textContent = 'HALT';
+            stopTimer();
         }
-        isRunning = !isRunning;
+        running = !running;
+    }
+
+    function stopTimer() {
+        clearInterval(interval);
+        ctrlBtn.textContent = 'ENGAGE';
     }
 
     function resetTimer() {
-        clearInterval(timerId);
-        isRunning = false;
-        const activeMode = document.querySelector('.mode-btn.active');
-        // Extract minutes based on the button text
-        let minutes = 25;
-        if(activeMode.textContent === 'REST') minutes = 5;
-        if(activeMode.textContent === 'DEEP SPACE') minutes = 15;
-        
-        timeLeft = minutes * 60;
-        startBtn.textContent = 'ENGAGE';
+        stopTimer();
+        running = false;
+        time = 25 * 60;
         updateDisplay();
     }
 
-    function setMode(minutes, btn) {
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        resetTimer();
-    }
-</script>
+    // --- RAIN SOUND LOGIC ---
+    const rainAudio = document.getElementById('rainSource');
+    const rainBtn = document.getElementById('rainBtn');
+    const speakerIcon = document.getElementById('speaker-icon');
 
-
-<script>
-    const canvas = document.getElementById('universe-canvas');
-    const ctx = canvas.getContext('2d');
-    let particlesArray;
-
-    // Set canvas size to full screen
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Handle window resize dynamically
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initParticles();
-    });
-
-    // Define the Atom/Star Particle Class
-    class Particle {
-        constructor(x, y, directionX, directionY, size, color) {
-            this.x = x;
-            this.y = y;
-            this.directionX = directionX;
-            this.directionY = directionY;
-            this.size = size;
-            this.color = color;
-            // Adds a subtle pulse effect variable
-            this.alpha = Math.random() * 0.5 + 0.5; 
-            this.pulseSpeed = Math.random() * 0.02 + 0.005;
-        }
-
-        // Draw individual particle
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            // Create a glowing effect
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = this.color;
-            ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-            ctx.fill();
-            ctx.shadowBlur = 0; // Reset shadow for performance
-        }
-
-        // Update particle position and pulse state
-        update() {
-            // Bounce off edges (optional - currently set to drift off and wrap)
-            if (this.x > canvas.width || this.x < 0) {
-                this.directionX = -this.directionX;
-            }
-            if (this.y > canvas.height || this.y < 0) {
-                this.directionY = -this.directionY;
-            }
-
-            // Move particle
-            this.x += this.directionX;
-            this.y += this.directionY;
-
-            // Pulse opacity
-            this.alpha += this.pulseSpeed;
-            if (this.alpha > 1 || this.alpha < 0.3) {
-                this.pulseSpeed = -this.pulseSpeed;
-            }
-
-            this.draw();
+    function toggleRain() {
+        if (rainAudio.paused) {
+            rainAudio.play();
+            rainBtn.classList.add('active');
+            speakerIcon.textContent = '🔊';
+        } else {
+            rainAudio.pause();
+            rainBtn.classList.remove('active');
+            speakerIcon.textContent = '🔇';
         }
     }
 
-    // Initialize the particle swarm
-    function initParticles() {
-        particlesArray = [];
-        // Number of particles based on screen size (adjust density here)
-        let numberOfParticles = (canvas.height * canvas.width) / 15000;
-        
-        for (let i = 0; i < numberOfParticles; i++) {
-            // Randomize position within canvas
-            let x = Math.random() * (innerWidth - 10) + 10;
-            let y = Math.random() * (innerHeight - 10) + 10;
-            
-            // Randomize movement speed - keep it very slow for a chill vibe
-            let directionX = (Math.random() * 0.4) - 0.2;
-            let directionY = (Math.random() * 0.4) - 0.2;
-            
-            // Randomize size (small stars vs larger 'atoms')
-            let size = Math.random() * 2 + 0.5;
-            
-            // Colors: White, light blue, faint purple
-            const colors = ['255,255,255', '150,220,255', '200,150,255'];
-            let color = colors[Math.floor(Math.random() * colors.length)];
+    // --- COSMIC BACKGROUND (Atoms/Stars) ---
+    const canvas = document.getElementById('canvas'), ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let stars = Array(80).fill().map(() => ({
+        x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+        s: Math.random()*2, v: Math.random()*0.3
+    }));
 
-            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-        }
-    }
-
-    // Animation Loop
     function animate() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+        stars.forEach(p => {
+            p.y -= p.v; if(p.y<0) p.y=canvas.height;
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+        });
         requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-        }
-        
-        // Optional connect lines (makes it look more like molecules/constellations)
-        // Uncomment the line below to enable connections
-        // connect(); 
     }
-    
-    // Optional function to draw lines between nearby particles
-    function connect(){
-        let opacityValue = 1;
-        for (let a = 0; a < particlesArray.length; a++) {
-            for (let b = a; b < particlesArray.length; b++) {
-                let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                // If close enough, draw a line
-                if (distance < (canvas.width/7) * (canvas.height/7)) {
-                    opacityValue = 1 - (distance/10000);
-                    ctx.strokeStyle = 'rgba(150,220,255,' + opacityValue * 0.2 + ')';
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-
-    // Start the universe simulation
-    initParticles();
     animate();
-
 </script>
-
 </body>
 </html>
