@@ -120,19 +120,25 @@
     }
 
     // --- RAIN SOUND LOGIC ---
-    const rainAudio = document.getElementById('rainSource');
+  const rainAudio = document.getElementById('rainSource');
     const rainBtn = document.getElementById('rainBtn');
     const speakerIcon = document.getElementById('speaker-icon');
+    
+    // Set volume to 40% for a better background experience
+    rainAudio.volume = 0.4; 
 
     function toggleRain() {
         if (rainAudio.paused) {
-            rainAudio.play();
+            // Play with a slight fade-in effect if possible
+            rainAudio.play().catch(e => console.log("User interaction required first"));
             rainBtn.classList.add('active');
             speakerIcon.textContent = '🔊';
+            rainBtn.style.opacity = "1";
         } else {
             rainAudio.pause();
             rainBtn.classList.remove('active');
             speakerIcon.textContent = '🔇';
+            rainBtn.style.opacity = "0.6";
         }
     }
 
