@@ -41,7 +41,6 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Updated Title for Infinity Style */
   .title {
     font-size: 14px;
     letter-spacing: 3px;
@@ -66,7 +65,6 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Common Button Styles & Hover Transition */
   .adjust-btn, .main-btn {
     transition: all 0.3s ease;
   }
@@ -86,14 +84,17 @@
     padding: 0;
   }
 
-  /* Hover Effect for Adjustment Buttons */
+  /* Hover Effect for Adjustment Buttons - Now with Stars! */
   .adjust-btn:hover {
-    background: url('image_0.png') no-repeat center center;
-    background-size: cover;
-    color: transparent; /* Hide text */
+    /* Layering the stars image on top of the turbine image */
+    background: url('image_1.png'), url('image_0.png');
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover, cover;
+    color: transparent;
     border: none;
     box-shadow: 0 0 20px rgba(160, 120, 255, 0.8);
-    transform: scale(1.1) rotate(360deg); /* Rotate for turbine effect */
+    transform: scale(1.1) rotate(360deg);
   }
 
   .controls {
@@ -113,21 +114,24 @@
     font-weight: 500;
   }
 
-  /* Hover Effect for Main Buttons */
+  /* Hover Effect for Main Buttons - Now with Stars! */
   .main-btn:hover {
-    background: url('image_0.png') no-repeat center center;
-    background-size: cover;
-    color: transparent; /* Hide text */
+    /* Layering the stars image on top of the turbine image */
+    background: url('image_1.png'), url('image_0.png');
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover, cover;
+    color: transparent;
     border: none;
-    border-radius: 50%; /* Transform to circle */
-    width: 50px; /* Set fixed width for circle */
-    height: 50px; /* Set fixed height for circle */
-    padding: 0; /* Reset padding */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 25px rgba(160, 120, 255, 0.9);
-    transform: scale(1.2) rotate(360deg); /* Rotate for turbine effect */
+    transform: scale(1.2) rotate(360deg);
   }
 
   .rain {
