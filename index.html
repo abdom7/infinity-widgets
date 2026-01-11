@@ -3,221 +3,221 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Infinity Pomodoro | Infinity Blocks</title>
+<title>Infinity Pomodoro | Infinity Blocks OS</title>
 
 <style>
   :root {
-    --bg: #F8F9FB;
-    --card: #FFFFFF;
-    --accent: #6366F1;
-    --text-main: #1E293B;
-    --text-sub: #64748B;
-    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    --infinity-bg: #F9FAFB;
+    --infinity-card: #FFFFFF;
+    --infinity-accent: #6366F1; /* Signature Indigo */
+    --infinity-text: #0F172A;
+    --infinity-subtext: #64748B;
+    --infinity-glow: 0 20px 25px -5px rgba(99, 102, 241, 0.1), 0 10px 10px -5px rgba(99, 102, 241, 0.04);
   }
 
   body {
     margin: 0;
-    background-color: var(--bg);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--infinity-bg);
+    font-family: 'Inter', -apple-system, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: var(--text-main);
+    color: var(--infinity-text);
   }
 
-  /* The Banana Pod */
-  .infinity-pod {
-    background: var(--card);
+  /* Infinity OS Component Pod */
+  .infinity-component {
+    background: var(--infinity-card);
     width: 320px;
     padding: 32px;
-    border-radius: 40px; /* High rounding for Banana Model */
-    box-shadow: var(--shadow);
+    border-radius: 40px; /* Banana Model Geometry */
+    box-shadow: var(--infinity-glow);
     text-align: center;
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px solid rgba(0, 0, 0, 0.04);
   }
 
-  .brand-tag {
-    font-size: 11px;
+  .brand-header {
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 1.5px;
-    color: var(--accent);
+    letter-spacing: 2px;
+    color: var(--infinity-accent);
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     display: block;
+    opacity: 0.8;
   }
 
   .title {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 24px;
-    color: var(--text-main);
+    letter-spacing: -0.5px;
   }
 
-  /* Progress Ring Container */
-  .timer-circle {
+  /* The Focus Orbit Ring */
+  .orbit-container {
     position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 0 auto 24px;
+    width: 190px;
+    height: 190px;
+    margin: 0 auto 28px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .timer-display {
-    font-size: 42px;
+    font-size: 44px;
     font-weight: 800;
-    color: var(--text-main);
+    color: var(--infinity-text);
     z-index: 2;
+    font-variant-numeric: tabular-nums;
   }
 
-  /* SVG Ring Logic */
   svg {
     position: absolute;
-    top: 0;
-    left: 0;
     transform: rotate(-90deg);
   }
 
   circle {
     fill: none;
-    stroke-width: 8;
+    stroke-width: 10;
     stroke-linecap: round;
   }
 
-  .bg-ring { stroke: #F1F5F9; }
-  .progress-ring {
-    stroke: var(--accent);
-    stroke-dasharray: 502;
+  .orbit-bg { stroke: #F1F5F9; }
+  .orbit-progress {
+    stroke: var(--infinity-accent);
+    stroke-dasharray: 540;
     stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s linear;
+    transition: stroke-dashoffset 0.8s ease;
   }
 
-  /* Banana-Style Buttons */
+  /* Component Actions */
   .controls {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  .time-adjust {
+  .adjustment-row {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 8px;
+    gap: 20px;
+    margin-bottom: 10px;
   }
 
-  .btn-circle {
-    width: 44px;
-    height: 44px;
-    border-radius: 22px;
+  .btn-adjust {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
     border: none;
-    background: #F1F5F9;
-    color: var(--text-main);
+    background: #F8FAFC;
+    color: var(--infinity-text);
     font-size: 20px;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .btn-circle:hover {
-    background: var(--accent);
+  .btn-adjust:hover {
+    background: var(--infinity-accent);
     color: white;
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 
-  .btn-pill {
-    padding: 14px 28px;
-    border-radius: 30px; /* Banana pill shape */
+  .btn-action {
+    padding: 16px;
+    border-radius: 24px; /* Modular pill shape */
     border: none;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
   }
 
-  .btn-primary {
-    background: var(--accent);
+  .btn-main {
+    background: var(--infinity-accent);
     color: white;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
   }
 
-  .btn-primary:hover {
+  .btn-main:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
   }
 
-  .btn-secondary {
+  .btn-reset {
     background: transparent;
-    color: var(--text-sub);
+    color: var(--infinity-subtext);
   }
 
-  .btn-secondary:hover {
-    color: var(--text-main);
-  }
+  .btn-reset:hover { color: var(--infinity-text); }
 </style>
 </head>
 <body>
 
-<div class="infinity-pod">
-  <span class="brand-tag">Infinity Blocks</span>
+<div class="infinity-component">
+  <span class="brand-header">Infinity Blocks</span>
   <div class="title">Infinity Pomodoro</div>
 
-  <div class="timer-circle">
-    <svg width="180" height="180">
-      <circle class="bg-ring" cx="90" cy="90" r="80"></circle>
-      <circle id="progressRing" class="progress-ring" cx="90" cy="90" r="80"></circle>
+  <div class="orbit-container">
+    <svg width="190" height="190">
+      <circle class="orbit-bg" cx="95" cy="95" r="86"></circle>
+      <circle id="orbitProgress" class="orbit-progress" cx="95" cy="95" r="86"></circle>
     </svg>
     <div class="timer-display" id="timer">25:00</div>
   </div>
 
-  <div class="time-adjust">
-    <button class="btn-circle" onclick="adjustTime(-60)">−</button>
-    <button class="btn-circle" onclick="adjustTime(60)">+</button>
+  <div class="adjustment-row">
+    <button class="btn-adjust" onclick="adjustTime(-60)">−</button>
+    <button class="btn-adjust" onclick="adjustTime(60)">+</button>
   </div>
 
   <div class="controls">
-    <button id="startBtn" class="btn-pill btn-primary" onclick="toggleTimer()">Start Session</button>
-    <button class="btn-pill btn-secondary" onclick="resetTimer()">Reset</button>
+    <button id="mainBtn" class="btn-action btn-main" onclick="toggleTimer()">Initialize Session</button>
+    <button class="btn-action btn-reset" onclick="resetTimer()">Reset Component</button>
   </div>
 </div>
 
 <script>
   let totalSeconds = 1500;
-  let initialSeconds = 1500;
+  let maxSeconds = 1500;
+  let timerActive = false;
   let interval = null;
-  const timerEl = document.getElementById("timer");
-  const progressRing = document.getElementById("progressRing");
-  const startBtn = document.getElementById("startBtn");
-  
-  const circumference = 2 * Math.PI * 80;
 
-  function updateDisplay() {
-    const min = Math.floor(totalSeconds / 60);
-    const sec = totalSeconds % 60;
-    timerEl.textContent = `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  const timerEl = document.getElementById("timer");
+  const progressRing = document.getElementById("orbitProgress");
+  const mainBtn = document.getElementById("mainBtn");
+  const circumference = 2 * Math.PI * 86;
+
+  function updateUI() {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    timerEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     
-    // Update Ring
-    const offset = circumference - (totalSeconds / initialSeconds) * circumference;
+    // Update Orbit
+    const offset = circumference - (totalSeconds / maxSeconds) * circumference;
     progressRing.style.strokeDashoffset = offset;
   }
 
   function toggleTimer() {
-    if (interval) {
+    if (timerActive) {
       clearInterval(interval);
-      interval = null;
-      startBtn.textContent = "Resume Session";
+      mainBtn.textContent = "Resume Session";
+      timerActive = false;
     } else {
-      startBtn.textContent = "Pause";
+      mainBtn.textContent = "Pause Session";
+      timerActive = true;
       interval = setInterval(() => {
         if (totalSeconds > 0) {
           totalSeconds--;
-          updateDisplay();
+          updateUI();
         } else {
           clearInterval(interval);
-          interval = null;
-          alert("Time's up! Take a break.");
+          alert("Focus Session Complete.");
         }
       }, 1000);
     }
@@ -225,24 +225,23 @@
 
   function resetTimer() {
     clearInterval(interval);
-    interval = null;
     totalSeconds = 1500;
-    initialSeconds = 1500;
-    startBtn.textContent = "Start Session";
-    updateDisplay();
+    maxSeconds = 1500;
+    timerActive = false;
+    mainBtn.textContent = "Initialize Session";
+    updateUI();
   }
 
-  function adjustTime(seconds) {
-    if (totalSeconds + seconds > 0) {
-      totalSeconds += seconds;
-      initialSeconds = Math.max(totalSeconds, initialSeconds); // Keep ring scale accurate
-      updateDisplay();
+  function adjustTime(val) {
+    if (totalSeconds + val > 0) {
+      totalSeconds += val;
+      maxSeconds = Math.max(totalSeconds, maxSeconds);
+      updateUI();
     }
   }
 
-  // Init ring
   progressRing.style.strokeDasharray = circumference;
-  updateDisplay();
+  updateUI();
 </script>
 
 </body>
