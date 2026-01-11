@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cosmic Infinity Pomodoro</title>
+<title>INFINITE FLOW ENGINE</title>
 
 <style>
   body {
@@ -41,15 +41,16 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  /* Updated Title for Infinity Style */
   .title {
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 3px;
-    opacity: 0.5;
+    opacity: 0.8;
     margin-bottom: 20px;
     text-transform: uppercase;
+    font-weight: 600;
   }
 
-  /* Container for timer and +/- buttons */
   .timer-container {
     display: flex;
     align-items: center;
@@ -65,7 +66,11 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Circular Adjustment Buttons */
+  /* Common Button Styles & Hover Transition */
+  .adjust-btn, .main-btn {
+    transition: all 0.3s ease;
+  }
+
   .adjust-btn {
     width: 40px;
     height: 40px;
@@ -78,14 +83,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
     padding: 0;
   }
 
+  /* Hover Effect for Adjustment Buttons */
   .adjust-btn:hover {
-    background: rgba(160, 120, 255, 0.4);
-    box-shadow: 0 0 15px rgba(160, 120, 255, 0.5);
-    transform: scale(1.1);
+    background: url('image_0.png') no-repeat center center;
+    background-size: cover;
+    color: transparent; /* Hide text */
+    border: none;
+    box-shadow: 0 0 20px rgba(160, 120, 255, 0.8);
+    transform: scale(1.1) rotate(360deg); /* Rotate for turbine effect */
   }
 
   .controls {
@@ -103,12 +111,23 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.3s ease;
   }
 
+  /* Hover Effect for Main Buttons */
   .main-btn:hover {
-    background: rgba(160,120,255,0.4);
-    box-shadow: 0 0 15px rgba(160,120,255,0.6);
+    background: url('image_0.png') no-repeat center center;
+    background-size: cover;
+    color: transparent; /* Hide text */
+    border: none;
+    border-radius: 50%; /* Transform to circle */
+    width: 50px; /* Set fixed width for circle */
+    height: 50px; /* Set fixed height for circle */
+    padding: 0; /* Reset padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(160, 120, 255, 0.9);
+    transform: scale(1.2) rotate(360deg); /* Rotate for turbine effect */
   }
 
   .rain {
@@ -127,7 +146,7 @@
   <canvas id="explosionCanvas"></canvas>
 
   <div class="widget">
-    <div class="title">Cosmic ∞ Focus</div>
+    <div class="title">INFINITE FLOW ENGINE</div>
     
     <div class="timer-container">
       <button class="adjust-btn" onclick="adjustTime(-60, event)">−</button>
@@ -154,7 +173,6 @@
   const rainAudio = document.getElementById("rainAudio");
   const rainState = document.getElementById("rainState");
 
-  // --- Particle System ---
   const canvas = document.getElementById('explosionCanvas');
   const ctx = canvas.getContext('2d');
   let particles = [];
@@ -208,16 +226,14 @@
   }
   animate();
 
-  // --- Pomodoro Logic ---
   function updateDisplay() {
     const min = Math.floor(totalSeconds / 60);
     const sec = totalSeconds % 60;
     timerEl.textContent = `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
   }
 
-  // NEW: Adjust time function
   function adjustTime(seconds, e) {
-    createExplosion(e.clientX, e.clientY, 20); // Small splash for adjustment
+    createExplosion(e.clientX, e.clientY, 20);
     if (totalSeconds + seconds >= 0) {
       totalSeconds += seconds;
       updateDisplay();
@@ -225,7 +241,7 @@
   }
 
   function startPomodoro(e) {
-    createExplosion(e.clientX, e.clientY, 80); // Big splash for start
+    createExplosion(e.clientX, e.clientY, 80);
     if (interval) return;
     interval = setInterval(() => {
       if (totalSeconds > 0) {
